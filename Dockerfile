@@ -1,8 +1,10 @@
+FROM mwader/static-ffmpeg:7.1.1 AS ffmpeg
+
 FROM n8nio/n8n:latest
 
 USER root
 
-RUN apk update && \
-    apk add --no-cache ffmpeg
+COPY --from=ffmpeg /ffmpeg /usr/local/bin/ffmpeg
+COPY --from=ffmpeg /ffprobe /usr/local/bin/ffprobe
 
 USER node
